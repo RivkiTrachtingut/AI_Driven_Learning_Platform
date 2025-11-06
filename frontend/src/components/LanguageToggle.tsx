@@ -8,9 +8,9 @@ const LanguageToggle: React.FC = () => {
     <div className="flex items-center space-x-2">
       <button
         onClick={() => setLanguage(language === 'en' ? 'he' : 'en')}
-        className="flex items-center space-x-2 px-3 py-1 rounded-md bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors"
+        className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/20 hover:bg-white/30 transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-white/20"
       >
-        <span className="text-sm font-medium">
+        <span className="text-sm font-medium text-white">
           {language === 'en' ? '🇮🇱 עברית' : '🇺🇸 English'}
         </span>
       </button>
