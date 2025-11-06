@@ -35,8 +35,15 @@ const HomePage: React.FC = () => {
       return;
     }
 
+    // Validate phone number - must be exactly 10 digits
+    const phoneDigits = userPhone.replace(/\D/g, '');
+    if (phoneDigits.length !== 10) {
+      alert(language === 'he' ? 'מספר טלפון לא תקין - חייב להכיל 10 ספרות' : 'Invalid phone number - must contain 10 digits');
+      return;
+    }
+
     try {
-      const result = await userService.loginOrRegister({ name: userName, phone: userPhone });
+      const result = await userService.loginOrRegister({ name: userName, phone: phoneDigits });
       setCurrentUser(result.user.id);
       alert(result.message);
     } catch (error) {
@@ -106,7 +113,13 @@ const HomePage: React.FC = () => {
                 type="tel"
                 placeholder={t.home.register.phone}
                 value={userPhone}
-                onChange={(e) => setUserPhone(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, '');
+                  if (value.length <= 10) {
+                    setUserPhone(value);
+                  }
+                }}
+                maxLength={10}
                 className="w-full p-4 pr-12 modern-input rounded-xl border-0 focus:ring-0 text-lg"
               />
               <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
