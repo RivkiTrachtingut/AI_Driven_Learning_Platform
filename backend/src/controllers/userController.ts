@@ -25,6 +25,30 @@ export class UserController {
     }
   }
 
+  async loginOrRegister(req: Request, res: Response) {
+    try {
+      const userData: CreateUserRequest = req.body;
+      const result = await userService.loginOrRegister(userData);
+      
+      const response: ApiResponse = {
+        success: true,
+        data: {
+          user: result.user,
+          isNewUser: result.isNewUser,
+          message: result.isNewUser ? 'User registered successfully!' : 'Welcome back!'
+        },
+      };
+      
+      res.status(result.isNewUser ? 201 : 200).json(response);
+    } catch (error: any) {
+      const response: ApiResponse = {
+        success: false,
+        error: error.message,
+      };
+      res.status(400).json(response);
+    }
+  }
+
   async getUserById(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);

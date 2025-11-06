@@ -31,6 +31,12 @@ body {
   margin-right: 0.5rem;
 }
 
+/* Fix navbar spacing for Hebrew */
+[dir="rtl"] .flex.items-center.space-x-4 > * + * {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
 [dir="rtl"] .ml-4 {
   margin-left: 0;
   margin-right: 1rem;

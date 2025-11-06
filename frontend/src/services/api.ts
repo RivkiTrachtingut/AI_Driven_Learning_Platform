@@ -16,6 +16,11 @@ export const userService = {
     return response.data.data!;
   },
 
+  loginOrRegister: async (userData: { name: string; phone: string }): Promise<{ user: User; isNewUser: boolean; message: string }> => {
+    const response = await api.post<ApiResponse<{ user: User; isNewUser: boolean; message: string }>>('/users/login', userData);
+    return response.data.data!;
+  },
+
   getUserById: async (id: number): Promise<User> => {
     const response = await api.get<ApiResponse<User>>(`/users/${id}`);
     return response.data.data!;

@@ -10,12 +10,12 @@ export const en = {
   home: {
     title: "Welcome to AI Learning Platform",
     register: {
-      title: "Register to Start Learning",
+      title: "Login or Register to Start Learning",
       name: "Your Name",
       phone: "Phone Number",
-      button: "Register",
+      button: "Login / Register",
       success: "User registered successfully!",
-      error: "Error registering user. Phone number might already exist.",
+      error: "Error with login/registration. Please check your details.",
       fillAll: "Please fill in all user details"
     },
     prompt: {
@@ -59,7 +59,9 @@ export const en = {
     noActivity: "No activity",
     question: "Question:",
     response: "AI Response:",
-    loading: "Loading admin data..."
+    loading: "Loading admin data...",
+    searchPlaceholder: "Search users by name...",
+    noResults: "No users found matching your search"
   },
   
   // Common

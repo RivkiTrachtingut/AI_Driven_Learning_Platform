@@ -9,10 +9,23 @@ const AdminPage: React.FC = () => {
   const [allPrompts, setAllPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'users' | 'prompts'>('users');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = users.filter(user => 
+        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredUsers(filtered);
+    } else {
+      setFilteredUsers(users);
+    }
+  }, [searchTerm, users]);
 
   const loadData = async () => {
     try {
@@ -66,6 +79,15 @@ const AdminPage: React.FC = () => {
 
       {activeTab === 'users' && (
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="p-4 border-b border-gray-200">
+            <input
+              type="text"
+              placeholder={t.admin.searchPlaceholder}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full max-w-md p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -84,7 +106,14 @@ const AdminPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user) => (
+              {filteredUsers.length === 0 && searchTerm ? (
+                <tr>
+                  <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
+                    {t.admin.noResults}
+                  </td>
+                </tr>
+              ) : (
+                filteredUsers.map((user) => (
                 <tr key={user.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">{user.name}</div>
@@ -102,7 +131,8 @@ const AdminPage: React.FC = () => {
                       : t.admin.noActivity}
                   </td>
                 </tr>
-              ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>

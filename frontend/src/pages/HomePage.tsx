@@ -36,11 +36,11 @@ const HomePage: React.FC = () => {
     }
 
     try {
-      const user = await userService.createUser({ name: userName, phone: userPhone });
-      setCurrentUser(user.id);
-      alert(t.home.register.success);
+      const result = await userService.loginOrRegister({ name: userName, phone: userPhone });
+      setCurrentUser(result.user.id);
+      alert(result.message);
     } catch (error) {
-      console.error('Error registering user:', error);
+      console.error('Error with user login/registration:', error);
       alert(t.home.register.error);
     }
   };
